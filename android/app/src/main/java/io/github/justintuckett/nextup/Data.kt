@@ -159,3 +159,54 @@ object Fmt {
         }
     }
 }
+
+// ---------- recommendations.json ----------
+
+data class Rec(
+    val id: Int,
+    val name: String,
+    val year: String,
+    val overview: String,
+    val poster: String,
+    val rating: Double,
+    val genres: List<String>,
+    val because: List<String>,
+    val providers: List<String>,
+    val url: String,
+)
+
+data class Recs(val generated: Instant?, val basedOn: List<String>, val items: List<Rec>)
+
+private fun JSONArray?.strings(): List<String> =
+    if (this == null) emptyList() else (0 until length()).map { optString(it) }.filter { it.isNotBlank() }
+
+fun parseRecs(text: String): Recs {
+    val root = JSONObject(text)
+    val arr = root.optJSONArray("items") ?: JSONArray()
+    val items = (0 until arr.length()).mapNotNull { i ->
+        runCatching {
+            val r = arr.getJSONObject(i)
+            Rec(
+                id = r.getInt("id"),
+                name = r.str("name"),
+                year = r.str("year"),
+                overview = r.str("overview"),
+                poster = r.str("poster"),
+                rating = r.optDouble("rating", 0.0),
+                genres = r.optJSONArray("genres").strings(),
+                because = r.optJSONArray("because").strings(),
+                providers = r.optJSONArray("providers").strings(),
+                url = r.str("url"),
+            )
+        }.getOrNull()
+    }
+    val generated = runCatching { Instant.parse(root.getString("generated")) }.getOrNull()
+    return Recs(generated, root.optJSONArray("basedOn").strings(), items)
+}
+
+fun becauseText(names: List<String>): String = when (names.size) {
+    0 -> ""
+    1 -> "Because you liked ${names[0]}"
+    2 -> "Because you liked ${names[0]} and ${names[1]}"
+    else -> "Because you liked ${names[0]}, ${names[1]} and ${names[2]}"
+}

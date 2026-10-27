@@ -118,6 +118,8 @@ export async function getShows(base, clientId, token, sectionKey) {
     ids: parseGuids(m),
     episodes: m.leafCount || 0,
     watched: m.viewedLeafCount || 0,
+    rating: m.userRating ?? null,      // your Plex star rating, 0–10
+    lastViewed: m.lastViewedAt || 0,
   }));
 }
 
@@ -141,6 +143,8 @@ export function parseGuids(m) {
   for (const g of all) {
     const tvdb = g.match(/tvdb:\/\/(\d+)/);
     const imdb = g.match(/imdb:\/\/(tt\d+)/);
+    const tmdb = g.match(/tmdb:\/\/(\d+)/);
+    if (tmdb && !ids.tmdb) ids.tmdb = tmdb[1];
     if (tvdb && !ids.tvdb) ids.tvdb = tvdb[1];
     if (imdb && !ids.imdb) ids.imdb = imdb[1];
   }

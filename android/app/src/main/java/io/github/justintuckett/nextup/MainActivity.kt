@@ -27,7 +27,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -36,6 +38,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -141,6 +146,9 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
     val zone = remember { ZoneId.systemDefault() }
 
     var feed by remember { mutableStateOf<Feed?>(null) }
+    var recs by remember { mutableStateOf<Recs?>(null) }
+    var hiddenRecs by remember { mutableStateOf(Repo.hiddenRecs(ctx)) }
+    var tab by remember { mutableIntStateOf(0) }
     var loaded by remember { mutableStateOf(false) }
     var refreshing by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
@@ -159,7 +167,7 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
         error = null
         scope.launch {
             Repo.refresh(ctx)
-                .onSuccess { feed = it; posterVersion++; lastFetch = Repo.lastFetch(ctx); NextUpWidget.redrawAll(ctx) }
+                .onSuccess { feed = it; recs = Repo.loadRecs(ctx); posterVersion++; lastFetch = Repo.lastFetch(ctx); NextUpWidget.redrawAll(ctx) }
                 .onFailure { error = "Couldn't update (${it.message}). Showing your saved list." }
             refreshing = false
         }
@@ -167,6 +175,7 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
 
     LaunchedEffect(Unit) {
         feed = withContext(Dispatchers.IO) { Repo.load(ctx) }
+        recs = withContext(Dispatchers.IO) { Repo.loadRecs(ctx) }
         loaded = true
         if (feed == null || System.currentTimeMillis() - Repo.lastFetch(ctx) > 60 * 60 * 1000) refresh()
         updateUrl = Repo.newerBuildUrl()
@@ -182,6 +191,7 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
         if (rows.isEmpty()) return@LaunchedEffect
         val target = if (focusId > 0) rows.indexOfFirst { it is EpRow && it.ep.id == focusId } else -1
         if (target >= 0) {
+            tab = 0
             if (focusId !in expanded) expanded.add(focusId)
             // Show the day header above the episode too.
             listState.scrollToItem((target - 1).coerceAtLeast(0))
@@ -207,8 +217,10 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
                     }
                 },
                 actions = {
-                    TextButton(onClick = { scope.launch { listState.animateScrollToItem(todayIndex) } }) {
-                        Text("Today", color = Accent)
+                    if (tab == 0) {
+                        TextButton(onClick = { scope.launch { listState.animateScrollToItem(todayIndex) } }) {
+                            Text("Today", color = Accent)
+                        }
                     }
                     if (refreshing) {
                         Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
@@ -225,13 +237,39 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
                 },
             )
         },
+        bottomBar = {
+            NavigationBar(containerColor = CardC) {
+                val itemColors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Accent, selectedTextColor = Accent,
+                    unselectedIconColor = Muted, unselectedTextColor = Muted,
+                    indicatorColor = Accent.copy(alpha = 0.18f),
+                )
+                NavigationBarItem(
+                    selected = tab == 0, onClick = { tab = 0 }, colors = itemColors,
+                    icon = { Icon(Icons.Filled.DateRange, contentDescription = null) },
+                    label = { Text("Episodes") },
+                )
+                NavigationBarItem(
+                    selected = tab == 1, onClick = { tab = 1 }, colors = itemColors,
+                    icon = { Icon(Icons.Filled.Star, contentDescription = null) },
+                    label = { Text("For You") },
+                )
+            }
+        },
     ) { padding ->
         Column(Modifier.padding(padding).fillMaxSize()) {
             updateUrl?.let { url ->
                 Banner("A new version of Next Up is ready. Tap to download.", Accent.copy(alpha = 0.15f), Accent) { openUrl(ctx, url) }
             }
             error?.let { msg -> Banner(msg, Color(0xFF2A2416), Color(0xFFF3DCA8)) { error = null } }
-            when {
+            if (tab == 1) {
+                RecsScreen(
+                    recs = recs,
+                    hidden = hiddenRecs,
+                    onHide = { id -> hiddenRecs = hiddenRecs + id; Repo.setHiddenRecs(ctx, hiddenRecs) },
+                    onUnhideAll = { hiddenRecs = emptySet(); Repo.setHiddenRecs(ctx, emptySet()) },
+                )
+            } else when {
                 !loaded -> {}
                 feed == null -> Empty(
                     if (refreshing) "Loading your shows…"
@@ -440,4 +478,112 @@ private fun SettingsDialog(hideWatched: Boolean, onDismiss: () -> Unit, onSave: 
         confirmButton = { TextButton(onClick = { onSave(hide, widgetStatus, url) }) { Text("Done", color = Accent) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel", color = Muted) } },
     )
+}
+
+// ---------- For You ----------
+
+@Composable
+private fun RecsScreen(recs: Recs?, hidden: Set<Int>, onHide: (Int) -> Unit, onUnhideAll: () -> Unit) {
+    if (recs == null || recs.items.isEmpty()) {
+        Empty(
+            "No recommendations yet.\n\nAdd your TMDB key to the repo as the TMDB_KEY secret, " +
+                "run the \"Update TV calendar\" job, then tap refresh.",
+        )
+        return
+    }
+    val visible = recs.items.filter { it.id !in hidden }
+    val expanded = remember { mutableStateListOf<Int>() }
+    LazyColumn(
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 40.dp),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        if (recs.basedOn.isNotEmpty()) {
+            item(key = "intro") {
+                Text(
+                    "Picked from shows you've watched a lot of or rated highly in Plex, like " +
+                        recs.basedOn.take(4).joinToString(", ") + ".",
+                    color = Muted, fontSize = 13.sp, lineHeight = 18.sp,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                )
+            }
+        }
+        items(visible, key = { "r${it.id}" }) { rec ->
+            RecCard(rec, rec.id in expanded, onClick = {
+                if (rec.id in expanded) expanded.remove(rec.id) else expanded.add(rec.id)
+            }, onHide = { onHide(rec.id) })
+        }
+        item(key = "footer") {
+            Column(Modifier.padding(top = 12.dp)) {
+                if (hidden.isNotEmpty()) {
+                    TextButton(onClick = onUnhideAll) { Text("Show ${hidden.size} hidden", color = Accent) }
+                }
+                Text(
+                    "Recommendations and streaming info from TMDB (via JustWatch). " +
+                        "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+                    color = Muted.copy(alpha = 0.7f), fontSize = 11.sp, lineHeight = 15.sp,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun RecPoster(rec: Rec, modifier: Modifier) {
+    val ctx = LocalContext.current
+    val bmp by produceState<ImageBitmap?>(null, rec.id) {
+        value = withContext(Dispatchers.IO) { Repo.recPoster(ctx, rec.id, rec.poster)?.asImageBitmap() }
+    }
+    Box(modifier.clip(RoundedCornerShape(8.dp)).background(Placeholder)) {
+        bmp?.let { Image(it, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize()) }
+    }
+}
+
+@Composable
+private fun RecCard(rec: Rec, expanded: Boolean, onClick: () -> Unit, onHide: () -> Unit) {
+    val ctx = LocalContext.current
+    val sub = listOf(rec.year, rec.genres.joinToString(", ")).filter { it.isNotBlank() }.joinToString(" · ")
+    val score = if (rec.rating > 0) "★ ${"%.1f".format(rec.rating)}" else ""
+    val where = if (rec.providers.isNotEmpty()) "On ${rec.providers.joinToString(", ")}" else ""
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(14.dp),
+        color = if (expanded) CardOpen else CardC,
+        border = BorderStroke(1.dp, Line),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+    ) {
+        Column(Modifier.padding(10.dp)) {
+            Row {
+                RecPoster(rec, Modifier.size(70.dp, 104.dp))
+                Spacer(Modifier.width(12.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(rec.name, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    if (sub.isNotEmpty()) Text(sub, color = Muted, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    val line = listOf(score, where).filter { it.isNotBlank() }.joinToString(" · ")
+                    if (line.isNotEmpty()) Text(line, color = Accent, fontSize = 13.sp, fontWeight = FontWeight.Medium, maxLines = 2)
+                    val why = becauseText(rec.because)
+                    if (why.isNotEmpty()) {
+                        Text(why, color = TextC.copy(alpha = 0.8f), fontSize = 12.sp, lineHeight = 16.sp, modifier = Modifier.padding(top = 4.dp))
+                    }
+                }
+            }
+            if (rec.overview.isNotBlank()) {
+                Text(
+                    rec.overview,
+                    color = if (expanded) TextC.copy(alpha = 0.8f) else Muted,
+                    fontSize = if (expanded) 14.sp else 12.sp,
+                    lineHeight = if (expanded) 20.sp else 16.sp,
+                    maxLines = if (expanded) Int.MAX_VALUE else 3,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+            }
+            if (expanded) {
+                Row(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedButton(onClick = onHide) { Text("Not interested", color = TextC) }
+                    if (rec.url.isNotBlank()) OutlinedButton(onClick = { openUrl(ctx, rec.url) }) { Text("TMDB", color = TextC) }
+                }
+            }
+        }
+    }
 }

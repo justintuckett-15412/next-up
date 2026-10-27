@@ -11,6 +11,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import * as core from '../core.js';
+import { recommend } from './recommend.js';
 
 const CLIENT_ID = 'next-up-calendar-job';
 const DAYS_BACK = 14;
@@ -102,7 +103,7 @@ async function showsFromPlex(saved) {
     rows.push({ title: s.title, ratingKey: s.ratingKey, mazeId });
   }
   const statusFor = ratingKey => core.getEpisodeStatus(base, CLIENT_ID, server.token, ratingKey);
-  return { rows, statusFor };
+  return { rows, statusFor, plexShows: shows };
 }
 
 // ---------- episodes.json (read by the Android app + widget) ----------
@@ -137,9 +138,9 @@ export async function main() {
   const out = process.env.CAL_FILE || 'episodes.ics';
   const jsonOut = out.replace(/\.ics$/i, '') + '.json';
   const saved = await readSavedShows();
-  let rows, statusFor = null;
+  let rows, statusFor = null, plexShows = null;
   try {
-    ({ rows, statusFor } = await showsFromPlex(saved));
+    ({ rows, statusFor, plexShows } = await showsFromPlex(saved));
     await writeFile(SHOWS_FILE, JSON.stringify(rows, null, 1) + '\n');
   } catch (e) {
     console.warn(`Plex not reachable (${e.message}); using ${SHOWS_FILE}.`);
@@ -186,13 +187,26 @@ export async function main() {
   await writeIfChanged(out, buildIcs(icsEntries), s => s.replace(/^DTSTAMP:.*$/gm, ''), icsEntries.length);
   const json = JSON.stringify(buildJson(shows, jsonEntries, statuses));
   await writeIfChanged(jsonOut, json, s => s.replace(/"generated":"[^"]*"/, ''), jsonEntries.length);
+
+  // Recommendations (needs a TMDB key and a fresh read of your Plex library).
+  if (process.env.TMDB_KEY && plexShows) {
+    try {
+      const recs = await recommend(plexShows, process.env.TMDB_KEY);
+      if (!recs.items.length) throw new Error('TMDB returned nothing usable; keeping the previous list');
+      await writeIfChanged('recommendations.json', JSON.stringify(recs), s => s.replace(/"generated":"[^"]*"/, ''), recs.items.length, 'shows');
+    } catch (e) {
+      console.warn(`Recommendations skipped: ${e.message}`);
+    }
+  } else if (!process.env.TMDB_KEY) {
+    console.log('No TMDB_KEY secret, so no recommendations.');
+  }
 }
 
-async function writeIfChanged(file, text, strip, count) {
+async function writeIfChanged(file, text, strip, count, unit = 'episodes') {
   let old = '';
   try { old = await readFile(file, 'utf8'); } catch {}
-  if (strip(old) === strip(text)) console.log(`${file}: no changes (${count} episodes).`);
-  else { await writeFile(file, text); console.log(`${file}: wrote ${count} episodes.`); }
+  if (strip(old) === strip(text)) console.log(`${file}: no changes (${count} ${unit}).`);
+  else { await writeFile(file, text); console.log(`${file}: wrote ${count} ${unit}.`); }
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

@@ -51,9 +51,63 @@ object Repo {
             tmp.writeText(text)
             if (!tmp.renameTo(File(ctx.filesDir, FEED_FILE))) throw IOException("Couldn't save the episode list")
             prefs(ctx).edit().putLong("lastFetch", System.currentTimeMillis()).apply()
+            refreshRecs(ctx)
             cachePosters(ctx, feed)
             feed
         }
+    }
+
+    // ---------- recommendations ----------
+
+    private const val RECS_FILE = "recommendations.json"
+
+    fun recsUrl(ctx: Context): String = dataUrl(ctx).substringBeforeLast('/') + "/" + RECS_FILE
+
+    fun loadRecs(ctx: Context): Recs? = runCatching {
+        val f = File(ctx.filesDir, RECS_FILE)
+        if (f.exists()) parseRecs(f.readText()) else null
+    }.getOrNull()
+
+    /** Not fatal: recommendations are optional (they need a TMDB key on the GitHub side). */
+    private fun refreshRecs(ctx: Context) {
+        runCatching {
+            val text = httpGet(recsUrl(ctx) + "?v=" + System.currentTimeMillis() / 60000)
+            parseRecs(text)
+            val tmp = File(ctx.filesDir, "$RECS_FILE.tmp")
+            tmp.writeText(text)
+            tmp.renameTo(File(ctx.filesDir, RECS_FILE))
+        }
+    }
+
+    fun hiddenRecs(ctx: Context): Set<Int> =
+        prefs(ctx).getStringSet("hiddenRecs", emptySet())!!.mapNotNull { it.toIntOrNull() }.toSet()
+
+    fun setHiddenRecs(ctx: Context, ids: Set<Int>) =
+        prefs(ctx).edit().putStringSet("hiddenRecs", ids.map { it.toString() }.toSet()).apply()
+
+    /** Downloads (once) and returns a recommendation's poster. Call off the main thread. */
+    fun recPoster(ctx: Context, id: Int, url: String): Bitmap? {
+        if (url.isBlank()) return null
+        val key = "rec:$id"
+        memory.get(key)?.let { return it }
+        val f = File(File(ctx.cacheDir, "recs").apply { mkdirs() }, "$id.jpg")
+        return runCatching {
+            if (!f.exists() || f.length() == 0L) {
+                val c = URL(url).openConnection() as HttpURLConnection
+                c.connectTimeout = 15000
+                c.readTimeout = 20000
+                val bytes = try { c.inputStream.use { it.readBytes() } } finally { c.disconnect() }
+                val tmp = File(f.path + ".tmp")
+                tmp.writeBytes(bytes)
+                tmp.renameTo(f)
+            }
+            val opts = BitmapFactory.Options().apply { inPreferredConfig = Bitmap.Config.RGB_565 }
+            val src = BitmapFactory.decodeFile(f.path, opts) ?: return null
+            val w = 220
+            val out = if (src.width > w) Bitmap.createScaledBitmap(src, w, src.height * w / src.width, true) else src
+            memory.put(key, out)
+            out
+        }.getOrNull()
     }
 
     /** Returns the download link if GitHub has a newer build than this one. */

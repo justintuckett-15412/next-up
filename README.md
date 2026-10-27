@@ -41,6 +41,14 @@ The `android/` folder is a native Android app with a scrollable home-screen widg
 
 **Signing key:** add two repo secrets, `ANDROID_KEYSTORE_B64` (the key file, base64-encoded) and `ANDROID_KEYSTORE_PASSWORD`, so every build is signed with the same key and installs over the last one. Without them the build still works, but it uses a throwaway key and you'd have to uninstall before each update. Keep a private backup of the key; if you lose it, you'll need to uninstall and reinstall once with a new key.
 
+## Recommendations (For You tab)
+
+The calendar job can also write `recommendations.json`: shows you don't have yet, based on the ones you've watched most or rated highly in Plex (your low-rated shows push similar ones down). Suggestions and streaming services come from [TMDB](https://www.themoviedb.org).
+
+To turn it on, get a free TMDB API Read Access Token (themoviedb.org → Settings → API) and add it as the repo secret `TMDB_KEY`. In the app, tap a suggestion and then **Not interested** to hide it.
+
+This product uses the TMDB API but is not endorsed or certified by TMDB.
+
 ## Notes
 
 - Your Plex token stays in the GitHub secret and in the app's storage on your device. It never goes into the repo.
