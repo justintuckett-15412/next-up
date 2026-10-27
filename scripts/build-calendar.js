@@ -111,7 +111,7 @@ export function buildJson(shows, entries, statuses) {
     generated: new Date().toISOString(),
     plexStatus: statuses.size > 0,
     shows: Object.fromEntries([...shows].map(([id, s]) => [id, {
-      name: s.name, network: s.network, poster: s.image, url: s.url, status: s.status,
+      name: s.name, network: s.network, poster: s.image, url: s.url, status: s.status, summary: s.summary || '',
     }])),
     episodes: entries.map(({ show, ep }) => {
       const st = statuses.get(show.mazeId);

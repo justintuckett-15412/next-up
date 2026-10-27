@@ -240,8 +240,8 @@ private fun EpisodeItem(context: Context, row: EpRow, poster: Bitmap?, zone: Zon
                     ),
                 )
             }
-            if (e.summary.isNotBlank()) {
-                Text(e.summary, style = TextStyle(color = W.muted, fontSize = 11.sp), maxLines = 2)
+            if (row.description.isNotBlank()) {
+                Text(row.description, style = TextStyle(color = W.muted, fontSize = 11.sp), maxLines = 2)
             }
         }
     }

@@ -354,9 +354,9 @@ private fun EpisodeCard(row: EpRow, zone: ZoneId, expanded: Boolean, posterVersi
                     if (whenLine.isNotEmpty()) {
                         Text(whenLine, color = Accent, fontSize = 13.sp, fontWeight = FontWeight.Medium, maxLines = 1)
                     }
-                    if (!expanded && e.summary.isNotBlank()) {
+                    if (!expanded && row.description.isNotBlank()) {
                         Text(
-                            e.summary, color = Muted, fontSize = 12.sp, lineHeight = 16.sp,
+                            row.description, color = Muted, fontSize = 12.sp, lineHeight = 16.sp,
                             maxLines = 2, overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(top = 2.dp),
                         )
@@ -368,9 +368,9 @@ private fun EpisodeCard(row: EpRow, zone: ZoneId, expanded: Boolean, posterVersi
                 }
             }
             if (expanded) {
-                if (e.summary.isNotBlank()) {
+                if (row.description.isNotBlank()) {
                     Text(
-                        e.summary, color = TextC.copy(alpha = 0.8f), fontSize = 14.sp, lineHeight = 20.sp,
+                        row.description, color = TextC.copy(alpha = 0.8f), fontSize = 14.sp, lineHeight = 20.sp,
                         modifier = Modifier.padding(top = 10.dp),
                     )
                 }

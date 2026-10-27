@@ -216,6 +216,7 @@ export async function getShowInfo(mazeId) {
     image: (s.image?.medium || '').replace(/^http:/, 'https:'),
     url: s.url,
     runtime: s.averageRuntime || s.runtime || 30,
+    summary: stripHtml(s.summary, 400),
     updated: s.updated || 0,
     next: slimEp(s._embedded?.nextepisode),
     prev: slimEp(s._embedded?.previousepisode),

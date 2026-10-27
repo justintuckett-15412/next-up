@@ -17,6 +17,7 @@ data class Show(
     val network: String,
     val poster: String,
     val url: String,
+    val summary: String = "",
 )
 
 data class Episode(
@@ -56,7 +57,7 @@ fun parseFeed(text: String): Feed {
     for (key in showsJson.keys()) {
         val s = showsJson.getJSONObject(key)
         val id = key.toIntOrNull() ?: continue
-        shows[id] = Show(id, s.str("name"), s.str("network"), s.str("poster"), s.str("url"))
+        shows[id] = Show(id, s.str("name"), s.str("network"), s.str("poster"), s.str("url"), s.str("summary"))
     }
     val arr = root.optJSONArray("episodes") ?: JSONArray()
     val episodes = (0 until arr.length()).mapNotNull { i ->
@@ -85,7 +86,11 @@ fun parseFeed(text: String): Feed {
 
 sealed interface ListRow { val key: String }
 data class DayRow(val date: LocalDate) : ListRow { override val key = "d$date" }
-data class EpRow(val ep: Episode, val show: Show?) : ListRow { override val key = "e${ep.id}" }
+data class EpRow(val ep: Episode, val show: Show?) : ListRow {
+    override val key = "e${ep.id}"
+    /** Episode description, or the show's description until TVmaze posts one. */
+    val description: String get() = ep.summary.ifBlank { show?.summary?.takeIf { it.isNotBlank() }?.let { "About the show: $it" } ?: "" }
+}
 
 fun buildRows(
     feed: Feed,
