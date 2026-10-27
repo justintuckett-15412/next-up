@@ -15,6 +15,8 @@ import * as core from '../core.js';
 const CLIENT_ID = 'next-up-calendar-job';
 const DAYS_BACK = 14;
 const DAYS_AHEAD = 120;
+const JSON_DAYS_BACK = 30;   // the app/widget can scroll back this far
+const JSON_DAYS_AHEAD = 90;
 const SHOWS_FILE = 'shows.json';
 
 // ---------- iCalendar helpers ----------
@@ -99,16 +101,45 @@ async function showsFromPlex(saved) {
     }
     rows.push({ title: s.title, ratingKey: s.ratingKey, mazeId });
   }
-  return rows;
+  const statusFor = ratingKey => core.getEpisodeStatus(base, CLIENT_ID, server.token, ratingKey);
+  return { rows, statusFor };
+}
+
+// ---------- episodes.json (read by the Android app + widget) ----------
+export function buildJson(shows, entries, statuses) {
+  return {
+    generated: new Date().toISOString(),
+    plexStatus: statuses.size > 0,
+    shows: Object.fromEntries([...shows].map(([id, s]) => [id, {
+      name: s.name, network: s.network, poster: s.image, url: s.url, status: s.status,
+    }])),
+    episodes: entries.map(({ show, ep }) => {
+      const st = statuses.get(show.mazeId);
+      const hit = st?.get(`${ep.season}-${ep.number}`);
+      return {
+        id: ep.id,
+        show: show.mazeId,
+        code: core.epCode(ep),
+        name: ep.name,
+        airdate: ep.airdate,
+        airstamp: ep.airtime && ep.airstamp ? ep.airstamp : '',
+        runtime: ep.runtime || show.runtime || 30,
+        summary: ep.summary,
+        have: st ? !!hit : null,          // null = unknown (Plex not reachable)
+        watched: st ? !!hit?.watched : null,
+      };
+    }),
+  };
 }
 
 // ---------- main ----------
 export async function main() {
   const out = process.env.CAL_FILE || 'episodes.ics';
+  const jsonOut = out.replace(/\.ics$/i, '') + '.json';
   const saved = await readSavedShows();
-  let rows;
+  let rows, statusFor = null;
   try {
-    rows = await showsFromPlex(saved);
+    ({ rows, statusFor } = await showsFromPlex(saved));
     await writeFile(SHOWS_FILE, JSON.stringify(rows, null, 1) + '\n');
   } catch (e) {
     console.warn(`Plex not reachable (${e.message}); using ${SHOWS_FILE}.`);
@@ -117,10 +148,11 @@ export async function main() {
   const ids = [...new Set(rows.map(r => r.mazeId).filter(Boolean))];
   if (!ids.length) throw new Error(`No shows to look up. Set PLEX_TOKEN, or upload ${SHOWS_FILE} from the app.`);
 
-  const today = new Date();
-  const from = new Date(today.getTime() - DAYS_BACK * 86400000).toISOString().slice(0, 10);
-  const to = new Date(today.getTime() + DAYS_AHEAD * 86400000).toISOString().slice(0, 10);
+  const day = n => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
+  const from = day(-Math.max(DAYS_BACK, JSON_DAYS_BACK));
+  const to = day(Math.max(DAYS_AHEAD, JSON_DAYS_AHEAD));
   const entries = [];
+  const shows = new Map();
 
   for (const id of ids) {
     try {
@@ -128,6 +160,7 @@ export async function main() {
       if (!show) continue;
       const recent = show.prev && show.prev.airdate >= from;
       if (!show.next && !recent) continue; // nothing in the window
+      shows.set(id, show);
       const eps = await core.getEpisodes(id);
       for (const ep of eps) if (ep.airdate >= from && ep.airdate <= to) entries.push({ show, ep });
     } catch (e) {
@@ -136,13 +169,30 @@ export async function main() {
   }
   entries.sort((a, b) => (a.ep.airstamp || a.ep.airdate).localeCompare(b.ep.airstamp || b.ep.airdate));
 
-  const ics = buildIcs(entries);
+  // Which of these episodes are in Plex / watched.
+  const statuses = new Map();
+  if (statusFor) {
+    for (const id of shows.keys()) {
+      const row = rows.find(r => r.mazeId === id);
+      try { statuses.set(id, await statusFor(row.ratingKey)); } catch (e) { console.warn(`No Plex status for ${row.title}: ${e.message}`); }
+    }
+  }
+
+  const between = (a, b) => ({ ep }) => ep.airdate >= a && ep.airdate <= b;
+  const icsEntries = entries.filter(between(day(-DAYS_BACK), day(DAYS_AHEAD)));
+  const jsonEntries = entries.filter(between(day(-JSON_DAYS_BACK), day(JSON_DAYS_AHEAD)));
+
   // Only rewrite if something besides the timestamps changed (avoids pointless commits).
-  const strip = s => s.replace(/^DTSTAMP:.*$/gm, '');
+  await writeIfChanged(out, buildIcs(icsEntries), s => s.replace(/^DTSTAMP:.*$/gm, ''), icsEntries.length);
+  const json = JSON.stringify(buildJson(shows, jsonEntries, statuses));
+  await writeIfChanged(jsonOut, json, s => s.replace(/"generated":"[^"]*"/, ''), jsonEntries.length);
+}
+
+async function writeIfChanged(file, text, strip, count) {
   let old = '';
-  try { old = await readFile(out, 'utf8'); } catch {}
-  if (strip(old) === strip(ics)) console.log(`${out}: no changes (${entries.length} episodes).`);
-  else { await writeFile(out, ics); console.log(`${out}: wrote ${entries.length} episodes.`); }
+  try { old = await readFile(file, 'utf8'); } catch {}
+  if (strip(old) === strip(text)) console.log(`${file}: no changes (${count} episodes).`);
+  else { await writeFile(file, text); console.log(`${file}: wrote ${count} episodes.`); }
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

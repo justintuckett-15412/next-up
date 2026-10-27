@@ -1,0 +1,4 @@
+*.jks
+*.keystore
+android/.gradle/
+android/**/build/

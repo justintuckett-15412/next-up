@@ -121,6 +121,18 @@ export async function getShows(base, clientId, token, sectionKey) {
   }));
 }
 
+// Which episodes of a show are in the library, and which are watched.
+// Returns Map "season-episode" -> { watched: bool }.
+export async function getEpisodeStatus(base, clientId, token, ratingKey) {
+  const r = await getJSON(`${base}/library/metadata/${ratingKey}/allLeaves?${plexQS(clientId, token)}`, ACCEPT, 30000);
+  const map = new Map();
+  for (const e of r.MediaContainer?.Metadata || []) {
+    if (e.parentIndex == null || e.index == null) continue;
+    map.set(`${e.parentIndex}-${e.index}`, { watched: (e.viewCount || 0) > 0 });
+  }
+  return map;
+}
+
 // Handles both the new Plex agent (Guid: [{id:"tvdb://123"}]) and the
 // legacy one (guid: "com.plexapp.agents.thetvdb://123?lang=en").
 export function parseGuids(m) {
