@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Next Up</title>
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  :root {
+    --bg: #0f1115; --card: #181b21; --card2: #1f232b; --line: #2a2f39;
+    --text: #eef0f4; --muted: #9aa3b2; --accent: #58c9b9; --accent-ink: #062b26;
+    --warn: #f0b45a; --today: #58c9b9;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  button { font: inherit; color: inherit; }
+  header { position: sticky; top: 0; z-index: 5; background: rgba(15,17,21,.92);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+    padding: calc(env(safe-area-inset-top) + 10px) 16px 10px; display: flex; align-items: center; gap: 10px; }
+  header h1 { font-size: 20px; margin: 0; letter-spacing: .2px; }
+  header .sub { color: var(--muted); font-size: 12px; }
+  header .grow { flex: 1; min-width: 0; }
+  .iconbtn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--card); display: grid; place-items: center; cursor: pointer; }
+  .iconbtn svg { width: 20px; height: 20px; }
+  .iconbtn.spin svg { animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  main { padding: 8px 16px calc(env(safe-area-inset-bottom) + 32px); max-width: 720px; margin: 0 auto; }
+  #status { color: var(--muted); font-size: 13px; padding: 8px 0 0; min-height: 0; }
+  #status:empty { display: none; }
+  .banner { background: #2a2416; border: 1px solid #4a3d1d; color: #f3dca8; padding: 10px 12px;
+    border-radius: 12px; font-size: 13px; margin-top: 10px; }
+  .banner:empty { display: none; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted);
+    margin: 22px 0 8px; display: flex; gap: 8px; align-items: baseline; }
+  h2 .count { font-weight: 400; letter-spacing: 0; text-transform: none; }
+  h2.today { color: var(--today); }
+  .card { display: flex; gap: 12px; align-items: center; background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 10px; margin-bottom: 8px; cursor: pointer; width: 100%; text-align: left; }
+  .card[aria-expanded="true"] { border-radius: 14px 14px 0 0; margin-bottom: 0; background: var(--card2); }
+  .poster { width: 52px; height: 76px; border-radius: 8px; object-fit: cover; background: #252a33; flex: none; }
+  .meta { flex: 1; min-width: 0; }
+  .meta h3 { margin: 0 0 2px; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .meta p { margin: 0; color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .meta .when { color: var(--text); margin-top: 4px; }
+  .meta .when b { color: var(--accent); font-weight: 600; }
+  .badge { flex: none; font-size: 11px; padding: 3px 8px; border-radius: 99px; background: #23303a; color: #b9d4e6; }
+  .details { background: var(--card2); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px;
+    padding: 4px 12px 12px; margin-bottom: 8px; font-size: 14px; }
+  .details .ep { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .details .ep:last-of-type { border-bottom: 0; }
+  .details .ep span:last-child { color: var(--muted); white-space: nowrap; }
+  .details .summary { color: var(--muted); font-size: 13px; margin: 8px 0; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 14px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--card); text-decoration: none; color: var(--text); font-weight: 500; cursor: pointer; }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+  .more { background: none; border: 0; color: var(--accent); padding: 6px 0; cursor: pointer; }
+  .empty { text-align: center; color: var(--muted); padding: 60px 20px; }
+  .signin { text-align: center; padding: 70px 24px; }
+  .signin h2 { justify-content: center; font-size: 22px; text-transform: none; letter-spacing: 0; color: var(--text); }
+  .signin p { color: var(--muted); max-width: 340px; margin: 0 auto 22px; }
+  dialog { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 18px;
+    width: min(520px, calc(100vw - 24px)); padding: 0; }
+  dialog::backdrop { background: rgba(0,0,0,.6); }
+  .sheet { padding: 18px; }
+  .sheet h3 { margin: 0 0 14px; font-size: 18px; }
+  .sheet label.row, .sheet .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--line); }
+  .sheet .label { font-weight: 500; }
+  .sheet .hint { color: var(--muted); font-size: 12px; }
+  .sheet select { background: var(--card2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; max-width: 60%; }
+  .sheet input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--accent); }
+  .sheet .btns { display: grid; gap: 8px; margin-top: 16px; }
+  .unmatched { color: var(--muted); font-size: 13px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="grow">
+    <h1>Next Up</h1>
+    <div class="sub" id="updated"></div>
+  </div>
+  <button class="iconbtn" id="refreshBtn" aria-label="Refresh">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+  </button>
+  <button class="iconbtn" id="settingsBtn" aria-label="Settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+  </button>
+</header>
+<main>
+  <div id="status"></div>
+  <div class="banner" id="banner"></div>
+  <div id="list"></div>
+</main>
+<dialog id="settings"><div class="sheet" id="settingsBody"></div></dialog>
+<script type="module" src="app.js"></script>
+</body>
+</html>

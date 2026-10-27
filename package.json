@@ -1,0 +1,9 @@
+{
+  "name": "next-up",
+  "private": true,
+  "type": "module",
+  "description": "Plex TV air-date tracker: web app + calendar feed",
+  "scripts": {
+    "calendar": "node scripts/build-calendar.js"
+  }
+}
