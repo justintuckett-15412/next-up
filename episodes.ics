@@ -1,0 +1,698 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Next Up//Plex TV air dates//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:TV Episodes
+X-WR-CALDESC:Upcoming episodes for shows on my Plex server
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:tvmaze-ep-3616304@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261013
+DTEND;VALUE=DATE:20261014
+SUMMARY:VisionQuest · S01E01 · No Strings
+DESCRIPTION:Disney+\n\nVision embarks on a journey of self-discovery and fi
+ nds himself hunted by a deadly force.
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616305@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261013
+DTEND;VALUE=DATE:20261014
+SUMMARY:VisionQuest · S01E02 · Theseus
+DESCRIPTION:Disney+\n\nVision comes face to face with his assailant while i
+ nvestigating whether Tommy Shepherd is his son.
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3711572@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261015T000000Z
+DTEND:20261015T013000Z
+SUMMARY:Survivor · S51E04 · That's the Magic of Survivor
+DESCRIPTION:CBS\n\nIn a Tale of Two Tribes\, one tribe feels torn apart in 
+ the aftermath of a divisive vote-out\, while another tribe basks in unity\
+ , until an unexpected summoning changes everything. Then\, old wounds and 
+ previous alliances are put to the test at tribal council.
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3777354@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261015T200500Z
+DTEND:20261015T210500Z
+SUMMARY:Taskmaster · S22E07 · The Oldest I've Ever Looked
+DESCRIPTION:Channel 4\n\nA former contestant makes an unexpected and dramat
+ ic return to the Taskmaster house\, but will the current cast give them th
+ e respect they undoubtedly deserve?
+URL:https://www.tvmaze.com/shows/2955/taskmaster
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3773294@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261019T000000Z
+DTEND:20261019T003000Z
+SUMMARY:The Simpsons · S38E03 · Treehouse of Horror Presents: The Revenge
+ ning
+DESCRIPTION:FOX\n\nAll hell breaks loose on Halloween when a killer comes t
+ o Springfield and hacks their way through town. No Simpson is safe from...
+  THE REVENGENING!
+URL:https://www.tvmaze.com/shows/83/the-simpsons
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616306@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:VisionQuest · S01E03 · Reboot
+DESCRIPTION:Disney+\n\nVision and Tommy Shepherd join forces in order to su
+ rvive while a terrifying killer strikes again.
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616307@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:VisionQuest · S01E04 · Malware
+DESCRIPTION:Disney+\n\nAs Vision confronts a new enemy\, Ultron and Tommy S
+ hepherd come face to face.
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3711573@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261022T000000Z
+DTEND:20261022T013000Z
+SUMMARY:Survivor · S51E05 · Not Here to Get a Pedicure
+DESCRIPTION:CBS\n\nThis week's Immunity Challenge comes with double jeopard
+ y when two tribes face tribal council. The Open Era continues its promise 
+ when one player receives a never-before-seen advantage. Then\, two tribal 
+ councils deliver high drama – with tears and a shocking standoff.
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3783217@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261022T200500Z
+DTEND:20261022T210500Z
+SUMMARY:Taskmaster · S22E08 · The Unfairity
+DESCRIPTION:Channel 4\n\nRichard Ayoade causes controversy while wearing a 
+ blindfold\, Isy Suttie reveals her revolutionary counting method\, Nina Co
+ nti invents a new word\, Matt Lucas briefly turns into an old-school railw
+ ayman\, and Chloe Petts is the first contestant in Taskmaster history to d
+ raw blood while avoiding flying…
+URL:https://www.tvmaze.com/shows/2955/taskmaster
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3773293@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261026T000000Z
+DTEND:20261026T003000Z
+SUMMARY:The Simpsons · S38E04 · Treehouse of Horror XXXVII
+DESCRIPTION:FOX\n\nBart and Lisa are trapped in an abandoned immersive them
+ e park experience.
+URL:https://www.tvmaze.com/shows/83/the-simpsons
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616308@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261027
+DTEND;VALUE=DATE:20261028
+SUMMARY:VisionQuest · S01E05 · Firewall
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616309@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261027
+DTEND;VALUE=DATE:20261028
+SUMMARY:VisionQuest · S01E06 · Deadlock
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3711574@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261029T000000Z
+DTEND:20261029T013000Z
+SUMMARY:Survivor · S51E06 · I Love Crying
+DESCRIPTION:CBS\n\nA bold move to save a castaway at the last tribal counci
+ l causes fractures to the Dina Tribe. A mysterious meeting will tie the fa
+ tes of some players together. Then\, emotions run hot in a high-stakes cha
+ llenge that tests the tribe.
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791797@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261029T210500Z
+DTEND:20261029T220500Z
+SUMMARY:Taskmaster · S22E09 · A Very Televisual Torso
+DESCRIPTION:Channel 4\n\nMatt Lucas decides to cut the Taskmaster down to s
+ ize. Nina Conti repeatedly insults a citrus fruit\, and Alex Horne delight
+ s in making everyone wear aprons.
+URL:https://www.tvmaze.com/shows/2955/taskmaster
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3684533@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261030T010000Z
+DTEND:20261030T020000Z
+SUMMARY:Ghosts · S06 Special · Halloween 6: The Mirror – Parts One & Tw
+ o
+DESCRIPTION:CBS\n\nA couple of months after Pete's disappearance\, while Sa
+ m is in Australia on the set of her new film\, Polar Opposites\, Kyle step
+ s up to help baby-sit the ghosts. Also\, Hetty is unexpectedly reunited wi
+ th her estranged sister\, Margaret\, and Bela throws an unconventional Hal
+ loween bash at Woodstone.
+URL:https://www.tvmaze.com/shows/46573/ghosts
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3748281@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261030
+DTEND;VALUE=DATE:20261031
+SUMMARY:Dexter: Resurrection · S02E01 · Risky Business
+DESCRIPTION:Paramount+\n\nDexter struggles to find purpose beyond the hunt 
+ as Harrison begins his NYPD career. A brazen new murderer puts the city on
+  edge.
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3773295@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261102T010000Z
+DTEND:20261102T013000Z
+SUMMARY:The Simpsons · S38E05 · Testing 1-2-3
+DESCRIPTION:FOX\n\nIn what she argues is not an attempt to get extra time o
+ n tests\, Lisa has herself evaluated for three types of neurodiversity.. w
+ hich remind her of behaviors she's witnessed in Principal Skinner\, Comic 
+ Boy and Homer. Perhaps these atypical behaviors aren't as atypical as we t
+ hink.
+URL:https://www.tvmaze.com/shows/83/the-simpsons
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616310@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261103
+DTEND;VALUE=DATE:20261104
+SUMMARY:VisionQuest · S01E07 · Immolation
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3711575@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261105T010000Z
+DTEND:20261105T023000Z
+SUMMARY:Survivor · S51E07 · You Broke My Heart Like I was a Girl at the P
+ rom
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3794388@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261105T210000Z
+DTEND:20261105T220000Z
+SUMMARY:Taskmaster · S22E10 · Big\, Clumsy Emu Steps
+DESCRIPTION:Channel 4\n\nIt's the grand final and there's only one question
+  left to be answered: how much leg hair does Little Alex Horne have? No\, 
+ sorry: who is the 22nd Taskmaster champion?
+URL:https://www.tvmaze.com/shows/2955/taskmaster
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3786605@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261106
+DTEND;VALUE=DATE:20261107
+SUMMARY:Dexter: Resurrection · S02E02 · Young Blood
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3792161@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261109T013000Z
+DTEND:20261109T020000Z
+SUMMARY:The Simpsons · S38E06 · The Kosmic Kruiser
+DESCRIPTION:FOX
+URL:https://www.tvmaze.com/shows/83/the-simpsons
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3616311@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261110
+DTEND;VALUE=DATE:20261111
+SUMMARY:VisionQuest · S01E08 · Forever
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/64950/visionquest
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3615601@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E01 · The Life of 
+ Celeborn
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682718@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E02 · Istar
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682719@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E03 · Halls of Hon
+ or
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682720@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261111
+DTEND;VALUE=DATE:20261112
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E04 · Gothmog
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3711576@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261112T010000Z
+DTEND:20261112T023000Z
+SUMMARY:Survivor · S51E08 · Load the Ark\, Two by Two
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3786606@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261113
+DTEND;VALUE=DATE:20261114
+SUMMARY:Dexter: Resurrection · S02E03 · Fallen
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3586228@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:The Chosen · S06E01 · Episode 1
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/47119/the-chosen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3586229@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:The Chosen · S06E02 · Episode 2
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/47119/the-chosen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3586230@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261115
+DTEND;VALUE=DATE:20261116
+SUMMARY:The Chosen · S06E03 · Episode 3
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/47119/the-chosen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3792162@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261116T010000Z
+DTEND:20261116T013000Z
+SUMMARY:The Simpsons · S38E07 · Dream Scenari-Moe
+DESCRIPTION:FOX
+URL:https://www.tvmaze.com/shows/83/the-simpsons
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682721@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E05 · Triangle of 
+ Sadness
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682722@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261118
+DTEND;VALUE=DATE:20261119
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E06 · Mairon
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3711577@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261119T010000Z
+DTEND:20261119T023000Z
+SUMMARY:Survivor · S51E09 · TBA
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791165@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+SUMMARY:Dexter: Resurrection · S02E04 · Live Free and Die
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681437@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+SUMMARY:Percy Jackson and the Olympians · S03E01 · My Rescue Operation Go
+ es Very Wrong
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681441@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+SUMMARY:Percy Jackson and the Olympians · S03E02 · An Old Dead Friend Com
+ es to Visit
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3586231@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261122
+DTEND;VALUE=DATE:20261123
+SUMMARY:The Chosen · S06E04 · Episode 4
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/47119/the-chosen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682723@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261125
+DTEND;VALUE=DATE:20261126
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E07 · Amon Amarth
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3682724@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261125
+DTEND;VALUE=DATE:20261126
+SUMMARY:The Lord of the Rings: The Rings of Power · S03E08 · The One Ring
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-p
+ ower
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3789586@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261126T010000Z
+DTEND:20261126T023000Z
+SUMMARY:Survivor · S51E10 · TBA
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791166@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:Dexter: Resurrection · S02E05 · Panick Attack
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681443@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:Percy Jackson and the Olympians · S03E03 · I Learn How to Grow Zo
+ mbies
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681444@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:Percy Jackson and the Olympians · S03E04 · We Visit the Junkyard 
+ of the Gods
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3795762@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:SpongeBob SquarePants · S18E01 · Merry Christmas Mr. Plankton
+DESCRIPTION:Nickelodeon\n\nSpongeBob\, Mr. Krabs\, and a group of misfits t
+ eam up to save Christmas when Plankton takes over the North Pole.
+URL:https://www.tvmaze.com/shows/713/spongebob-squarepants
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3586232@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261129
+DTEND;VALUE=DATE:20261130
+SUMMARY:The Chosen · S06E05 · Episode 5
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/47119/the-chosen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3796395@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261203T010000Z
+DTEND:20261203T023000Z
+SUMMARY:Survivor · S51E11 · TBA
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791167@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:Dexter: Resurrection · S02E06 · Out of the Past
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681445@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:Percy Jackson and the Olympians · S03E05 · I have a Dam Problem
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681446@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261204
+DTEND;VALUE=DATE:20261205
+SUMMARY:Percy Jackson and the Olympians · S03E06 · I Wrestle Santa's Evil
+  Twin
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3586233@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261206
+DTEND;VALUE=DATE:20261207
+SUMMARY:The Chosen · S06E06 · Episode 6
+DESCRIPTION:Prime Video
+URL:https://www.tvmaze.com/shows/47119/the-chosen
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3796396@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261210T010000Z
+DTEND:20261210T023000Z
+SUMMARY:Survivor · S51E12 · TBA
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3684534@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261211T020000Z
+DTEND:20261211T030000Z
+SUMMARY:Ghosts · S06 Special · Christmas Special
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/46573/ghosts
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791168@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+SUMMARY:Dexter: Resurrection · S02E07 · Rule Number One
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681447@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+SUMMARY:Percy Jackson and the Olympians · S03E07 · I Put on A Few Million
+  Extra Pounds
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3681448@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261211
+DTEND;VALUE=DATE:20261212
+SUMMARY:Percy Jackson and the Olympians · S03E08 · The Gods Vote How to K
+ ill Us
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/48108/percy-jackson-and-the-olympians
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3796397@next-up
+DTSTAMP:20261027T222302Z
+DTSTART:20261217T010000Z
+DTEND:20261217T023000Z
+SUMMARY:Survivor · S51E13 · TBA
+DESCRIPTION:CBS
+URL:https://www.tvmaze.com/shows/114/survivor
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791169@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261218
+DTEND;VALUE=DATE:20261219
+SUMMARY:Dexter: Resurrection · S02E08 · Game On
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791170@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20261225
+DTEND;VALUE=DATE:20261226
+SUMMARY:Dexter: Resurrection · S02E09 · Credit Where Credit Is Due
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3791179@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20270101
+DTEND;VALUE=DATE:20270102
+SUMMARY:Dexter: Resurrection · S02E10 · Now You See Me
+DESCRIPTION:Paramount+
+URL:https://www.tvmaze.com/shows/78665/dexter-resurrection
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:tvmaze-ep-3700733@next-up
+DTSTAMP:20261027T222302Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:Ahsoka · S02E01 · TBA
+DESCRIPTION:Disney+
+URL:https://www.tvmaze.com/shows/52343/ahsoka
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
