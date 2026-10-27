@@ -32,6 +32,9 @@ object Repo {
     fun hideWatched(ctx: Context) = prefs(ctx).getBoolean("hideWatched", false)
     fun setHideWatched(ctx: Context, v: Boolean) = prefs(ctx).edit().putBoolean("hideWatched", v).apply()
 
+    fun statusOnWidget(ctx: Context) = prefs(ctx).getBoolean("statusOnWidget", false)
+    fun setStatusOnWidget(ctx: Context, v: Boolean) = prefs(ctx).edit().putBoolean("statusOnWidget", v).apply()
+
     fun lastFetch(ctx: Context) = prefs(ctx).getLong("lastFetch", 0L)
 
     fun load(ctx: Context): Feed? = runCatching {

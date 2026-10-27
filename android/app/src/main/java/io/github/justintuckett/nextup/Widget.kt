@@ -113,6 +113,7 @@ private fun WidgetBody(context: Context, feed: Feed?, offset: Int, version: Long
         rows.filterIsInstance<EpRow>().map { it.ep.showId }.distinct().take(MAX_POSTERS)
             .associateWith { Repo.poster(context, it, POSTER_PX) }
     }
+    val showStatus = remember(version) { Repo.statusOnWidget(context) }
     val openApp = actionStartActivity(Intent(context, MainActivity::class.java))
     val label = if (offset == 0) "Upcoming" else "From ${Fmt.shortDate(start)}"
 
@@ -140,7 +141,7 @@ private fun WidgetBody(context: Context, feed: Feed?, offset: Int, version: Long
                 items(rows, itemId = { row -> rowId(row) }) { row ->
                     when (row) {
                         is DayRow -> DayHeader(row.date, today)
-                        is EpRow -> EpisodeItem(context, row, posters[row.ep.showId], zone)
+                        is EpRow -> EpisodeItem(context, row, posters[row.ep.showId], zone, showStatus)
                     }
                 }
             }
@@ -184,7 +185,7 @@ private fun DayHeader(day: LocalDate, today: LocalDate) {
 }
 
 @Composable
-private fun EpisodeItem(context: Context, row: EpRow, poster: Bitmap?, zone: ZoneId) {
+private fun EpisodeItem(context: Context, row: EpRow, poster: Bitmap?, zone: ZoneId, showStatus: Boolean) {
     val e = row.ep
     val open = actionStartActivity(
         Intent(context, MainActivity::class.java)
@@ -192,7 +193,7 @@ private fun EpisodeItem(context: Context, row: EpRow, poster: Bitmap?, zone: Zon
             .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
     )
     val time = Fmt.time(e, zone)
-    val status = Fmt.status(e, Instant.now(), zone)
+    val status = if (showStatus) Fmt.status(e, Instant.now(), zone) else null
 
     Row(
         modifier = GlanceModifier.fillMaxWidth().padding(top = 4.dp, bottom = 4.dp, end = 6.dp).clickable(open),

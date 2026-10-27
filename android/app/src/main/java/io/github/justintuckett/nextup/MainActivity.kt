@@ -265,11 +265,12 @@ private fun MainScreen(focusId: Int, onFocused: () -> Unit) {
         SettingsDialog(
             hideWatched = hideWatched,
             onDismiss = { showSettings = false },
-            onSave = { hide, url ->
+            onSave = { hide, widgetStatus, url ->
                 showSettings = false
                 val urlChanged = url.trim() != Repo.dataUrl(ctx)
                 hideWatched = hide
                 Repo.setHideWatched(ctx, hide)
+                Repo.setStatusOnWidget(ctx, widgetStatus)
                 Repo.setDataUrl(ctx, url)
                 scope.launch { NextUpWidget.redrawAll(ctx) }
                 if (urlChanged) refresh()
@@ -400,9 +401,10 @@ private fun StatusChip(status: Status) {
 }
 
 @Composable
-private fun SettingsDialog(hideWatched: Boolean, onDismiss: () -> Unit, onSave: (Boolean, String) -> Unit) {
+private fun SettingsDialog(hideWatched: Boolean, onDismiss: () -> Unit, onSave: (Boolean, Boolean, String) -> Unit) {
     val ctx = LocalContext.current
     var hide by remember { mutableStateOf(hideWatched) }
+    var widgetStatus by remember { mutableStateOf(Repo.statusOnWidget(ctx)) }
     var url by remember { mutableStateOf(Repo.dataUrl(ctx)) }
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -417,6 +419,13 @@ private fun SettingsDialog(hideWatched: Boolean, onDismiss: () -> Unit, onSave: 
                     }
                     Switch(checked = hide, onCheckedChange = { hide = it })
                 }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        Text("Plex status on widget", color = TextC)
+                        Text("Show In Plex / Watched / Not in Plex on the home screen too", color = Muted, fontSize = 12.sp)
+                    }
+                    Switch(checked = widgetStatus, onCheckedChange = { widgetStatus = it })
+                }
                 OutlinedTextField(
                     value = url,
                     onValueChange = { url = it },
@@ -428,7 +437,7 @@ private fun SettingsDialog(hideWatched: Boolean, onDismiss: () -> Unit, onSave: 
                 Text("Version ${BuildConfig.VERSION_NAME}", color = Muted, fontSize = 12.sp)
             }
         },
-        confirmButton = { TextButton(onClick = { onSave(hide, url) }) { Text("Done", color = Accent) } },
+        confirmButton = { TextButton(onClick = { onSave(hide, widgetStatus, url) }) { Text("Done", color = Accent) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel", color = Muted) } },
     )
 }
