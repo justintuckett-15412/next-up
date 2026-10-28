@@ -22,6 +22,18 @@ export function likeWeight(s) {
   return 0.5 + 1.5 * watchedShare + recent;
 }
 
+// "Netflix Standard with Ads", "HBO Max Amazon Channel" -> "Netflix", "HBO Max"
+export function cleanProvider(name) {
+  const n = String(name)
+    .replace(/\s+(Amazon|Apple TV|Roku Premium)\s+Channel$/i, '')
+    .replace(/\s+(Standard|Basic)?\s*with Ads$/i, '')
+    .replace(/\s+Free$/i, '')
+    .replace(/\s+(Premium Plus|Premium|Essential)$/i, '')
+    .trim();
+  const aliases = { 'Paramount+': 'Paramount Plus', 'AMC+': 'AMC Plus', 'MGM+': 'MGM Plus', 'MGM Plus': 'MGM Plus', 'Tubi TV': 'Tubi' };
+  return aliases[n] || n;
+}
+
 const norm = t => String(t || '').toLowerCase().replace(/\(\d{4}\)/g, '').replace(/[^a-z0-9]+/g, '');
 
 export function makeClient(key, fetchImpl = fetch) {
@@ -109,7 +121,7 @@ export async function recommend(plexShows, key, fetchImpl = fetch) {
     try {
       const p = await tmdb(`/tv/${c.r.id}/watch/providers`);
       const here = p?.results?.[REGION] || {};
-      providers = [...new Set([...(here.flatrate || []), ...(here.free || []), ...(here.ads || [])].map(x => x.provider_name))].slice(0, 4);
+      providers = [...new Set([...(here.flatrate || []), ...(here.free || []), ...(here.ads || [])].map(x => cleanProvider(x.provider_name)))].slice(0, 4);
     } catch {}
     items.push({
       id: c.r.id,
